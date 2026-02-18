@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Start Exam</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body{
+            background: #f4f6fb;
+            font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        }
+
+        .page-wrap{
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 28px 14px 100px;
+        }
+
+        /* Header card */
+        .exam-hero{
+            border: 0;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            background: linear-gradient(135deg, #4f6df6, #6a3de8);
+            color: #fff;
+        }
+
+        .exam-hero .title{
+            font-size: 1.8rem;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: .2px;
+        }
+        .exam-hero .meta{
+            opacity: .9;
+            font-size: .95rem;
+        }
+
+        .btn-back{
+            background: rgba(255,255,255,0.16);
+            border: 1px solid rgba(255,255,255,0.30);
+            color: #fff;
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-weight: 600;
+        }
+        .btn-back:hover{
+            background: rgba(255,255,255,0.22);
+            color: #fff;
+        }
+
+        /* Question card */
+        .q-card{
+            border: 0;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+        .q-head{
+            background: #fff;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .q-title{
+            margin: 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #222;
+        }
+        .q-title span{
+            font-weight: 600;
+            color: #1f2a44;
+        }
+
+        .q-badges{
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            min-width: 120px;
+        }
+        .badge-soft{
+            border-radius: 999px;
+            padding: 8px 12px;
+            font-weight: 700;
+            font-size: .78rem;
+        }
+        .badge-type{
+            background: rgba(108,117,125,0.14);
+            color: #4b5563;
+            border: 1px solid rgba(108,117,125,0.22);
+        }
+        .badge-marks{
+            background: rgba(13,202,240,0.18);
+            color: #0b7285;
+            border: 1px solid rgba(13,202,240,0.28);
+        }
+
+        .q-body{
+            background: #fff;
+            padding: 14px 16px 16px;
+        }
+
+        /* Option style */
+        .opt{
+            border: 1px solid rgba(0,0,0,0.10);
+            border-radius: 12px;
+            padding: 12px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: .12s ease;
+            cursor: pointer;
+            background: #fff;
+        }
+        .opt:hover{
+            border-color: rgba(79,109,246,0.45);
+            box-shadow: 0 4px 14px rgba(79,109,246,0.10);
+        }
+        .opt input{
+            margin-top: 0;
+        }
+        .opt .txt{
+            color: #111827;
+            font-size: .98rem;
+        }
+
+        /* Essay textarea */
+        .essay{
+            border-radius: 14px;
+            border: 1px solid rgba(0,0,0,0.12);
+            padding: 12px 14px;
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        /* Sticky submit bar */
+        .submit-bar{
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(0,0,0,0.08);
+            padding: 12px 0;
+        }
+        .submit-inner{
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+        .submit-note{
+            color: #6b7280;
+            font-size: .92rem;
+        }
+        .btn-submit{
+            border-radius: 14px;
+            padding: 10px 18px;
+            font-weight: 700;
+            background: #4361ee;
+            border: none;
+        }
+        .btn-submit:hover{ filter: brightness(0.96); }
+
+        /* Empty state */
+        .empty{
+            border-radius: 16px;
+            border: 1px dashed rgba(0,0,0,0.18);
+            padding: 18px;
+            color: #6b7280;
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-wrap">
+
+    <!-- HERO HEADER -->
+    <div class="card exam-hero mb-4">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+                <div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                        <i class="bi bi-journal-check fs-3"></i>
+                        <h1 class="title" th:text="${exam.examName}">Exam Name</h1>
+                    </div>
+                    <div class="meta">
+                        Subject: <span th:text="${exam.subject}">Subject</span>
+                        <span class="mx-1">|</span>
+                        Batch: <span th:text="${exam.batchName}">Batch</span>
+                    </div>
+                </div>
+
+                <a class="btn btn-back" th:href="@{/student/exams}">
+                    <i class="bi bi-arrow-left"></i> Back
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORM -->
+    <form th:action="@{/student/exams/{id}/submit(id=${exam.id})}" method="post">
+
+        <div th:if="${#lists.isEmpty(questions)}" class="empty">
+            <i class="bi bi-exclamation-circle me-1"></i> No questions added yet.
+        </div>
+
+        <div th:each="q, stat : ${questions}" class="mb-4">
+
+            <div class="card q-card">
+                <div class="q-head">
+                    <div>
+                        <p class="q-title mb-1">
+                            <span th:text="${stat.count}">1</span>. <span th:text="${q.questionText}">Question text</span>
+                        </p>
+                    </div>
+
+                    <div class="q-badges">
+                        <span class="badge-soft badge-type" th:text="${q.type}">MCQ</span>
+                        <span class="badge-soft badge-marks" th:text="${q.marks + ' marks'}">2 marks</span>
+                    </div>
+                </div>
+
+                <div class="q-body">
+
+                    <!-- MCQ (one under one) -->
+                    <div th:if="${q.type == 'MCQ'}" class="d-grid gap-3">
+
+                        <label class="opt" th:if="${q.optionA != null && q.optionA != ''}">
+                            <input class="form-check-input" type="radio" th:name="${'q_' + q.id}" value="A">
+                            <span class="txt" th:text="${q.optionA}">Option A</span>
+                        </label>
+
+                        <label class="opt" th:if="${q.optionB != null && q.optionB != ''}">
+                            <input class="form-check-input" type="radio" th:name="${'q_' + q.id}" value="B">
+                            <span class="txt" th:text="${q.optionB}">Option B</span>
+                        </label>
+
+                        <label class="opt" th:if="${q.optionC != null && q.optionC != ''}">
+                            <input class="form-check-input" type="radio" th:name="${'q_' + q.id}" value="C">
+                            <span class="txt" th:text="${q.optionC}">Option C</span>
+                        </label>
+
+                        <label class="opt" th:if="${q.optionD != null && q.optionD != ''}">
+                            <input class="form-check-input" type="radio" th:name="${'q_' + q.id}" value="D">
+                            <span class="txt" th:text="${q.optionD}">Option D</span>
+                        </label>
+
+                    </div>
+
+                    <!-- ESSAY -->
+                    <div th:if="${q.type == 'ESSAY'}">
+            <textarea class="form-control essay"
+                      th:name="${'q_' + q.id}"
+                      placeholder="Type your answer here..."></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- STICKY SUBMIT BAR -->
+        <div class="submit-bar">
+            <div class="submit-inner">
+                <div class="submit-note">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Review your answers before submitting.
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-submit">
+                    <i class="bi bi-check2-circle me-1"></i> Submit Answers
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Student Management System</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      background: white; /* ✅ changed to white */
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .login-card {
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+      border: 0;
+    }
+
+    .login-header{
+      background: linear-gradient(135deg,#4361ee,#6f42c1);
+      padding:25px;
+      text-align:center;
+      color:white;
+    }
+
+    .login-header h2 {
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .form-control:focus {
+      box-shadow: none;
+      border-color: #4361ee;
+    }
+
+    .btn-primary {
+      background: #4361ee;
+      border: none;
+      border-radius: 12px;
+    }
+
+    .btn-primary:hover {
+      background: #2f49d6;
+    }
+
+    .input-group-text {
+      background: transparent;
+      border-right: 0;
+    }
+
+    .form-control {
+      border-left: 0;
+    }
+
+    .link {
+      color: #4361ee;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="card login-card" style="width: 100%; max-width: 420px;">
+  <div class="login-header text-center text-white">
+    <h2 class="mb-1"><i class="bi bi-mortarboard-fill me-2"></i>SMS</h2>
+    <p class="mb-0 opacity-75">Student Management System</p>
+  </div>
+
+  <div class="card-body p-4 p-md-5">
+    <h4 class="text-center mb-4 fw-bold text-dark">Welcome Back</h4>
+
+    <!-- ✅ error message -->
+    <div th:if="${error}" class="alert alert-danger">
+      <span th:text="${error}"></span>
+    </div>
+
+    <!-- ✅ correct action + method -->
+    <form th:action="@{/login}" method="post">
+
+      <div class="mb-4">
+        <label class="form-label text-muted small fw-bold">EMAIL ADDRESS</label>
+        <div class="input-group">
+                    <span class="input-group-text border-end-0">
+                        <i class="bi bi-envelope text-muted"></i>
+                    </span>
+          <input type="email" name="email"
+                 class="form-control border-start-0 ps-0"
+                 placeholder="name@example.com" required>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label text-muted small fw-bold">PASSWORD</label>
+        <div class="input-group">
+                    <span class="input-group-text border-end-0">
+                        <i class="bi bi-lock text-muted"></i>
+                    </span>
+          <input type="password" name="password"
+                 class="form-control border-start-0 ps-0"
+                 placeholder="Enter your password" required>
+        </div>
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary py-2 fs-6">Login</button>
+      </div>
+
+      <p class="text-center mt-3">
+        Don't have an account?
+        <a th:href="@{/register}" class="fw-bold text-primary text-decoration-none">Register</a>
+
+
+      </p>
+
+
+
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
